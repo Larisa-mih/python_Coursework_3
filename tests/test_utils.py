@@ -14,8 +14,8 @@ def test_get_data():
     assert get_data(path) == [1, 2, 3]
 
 def test_get_sorted_list():
-    data = ["2018-06-24", "2019-09-06", "2018-06-20", "2019-08-16", "2019-07-18"]
-    assert get_sorted_list(data) == ["2019-09-06", "2019-08-16", "2019-07-18", "2018-06-24", "2018-06-20"]
+    data = ["2018-03-23", "2019-08-26", "2019-07-03", "2020-07-03"]
+    assert get_sorted_list(data) == ["2020-07-03", "2019-08-26", "2019-07-03", "2018-03-23"]
 
 def test_get_filtered_data():
     dictionary = [
@@ -48,4 +48,4 @@ def test_get_filtered_data():
     "from": "Visa Classic 4062745111784804",
     "to": "Maestro 8602249654751155"
     },}]
-    assert get_filtered_data(dictionary) == ["2018-07-06"]
+    assert get_filtered_data(dictionary) == ["2019-08-16"]
