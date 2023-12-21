@@ -9,17 +9,18 @@ def get_data(path):
 
 def get_filtered_data(data_dict):
     """Функция фильтрации по "EXECUTED"""
-    date_list = []
+    data_list = []
     for data in data_dict:
-        if "from" not in data:
+        if data == {}:
             continue
         elif data["state"] == "EXECUTED":
-            date_list.append(data["date"][0:10])
-    return date_list
+            data_list.append(data)
+    return data_list
 
-def get_sorted_list(date_list):
-    """Функция сортировки данных и выбор 5 последних"""
-    sorted_list = sorted(date_list, reverse=True)[0:5]
+
+def get_sorted_list(data_list):
+    """Функция сортировки данных"""
+    sorted_list = sorted(data_list, key=lambda operation: operation["date"], reverse=True)
     return sorted_list
 
 def number_format(name):
@@ -34,10 +35,10 @@ def number_format(name):
         format_number = " ".join(name_operation) + " " + name_list[-1][0:4] + " " + name_list[-1][4:6] + "**" + " " + "****" + " " + name_list[-1][-4:]
         return format_number
 
-def date_format(date):
+def data_format(data):
     """Фугкция перевода формата даты"""
-    format_date = ".".join(date.split("-")[::-1])
-    return format_date
+    format_data = ".".join(data[0:10].split("-")[::-1])
+    return format_data
     """Второй вариант с помощью datetime"""
 # datetime.datetime.fromisoformat("2019-08-26T10:50:58.294041")
 
@@ -48,3 +49,19 @@ def date_format(date):
 # date_parts = date.split('-')
 # reversed_parts = date_parts[::-1]
 # to_return = '.'.join(reversed_parts)
+
+def formate_operations_for_output(data):
+    data_name = data_format(data["date"])
+    description_name = data["description"]
+    if data.get("from"):
+        from_name = number_format(data["from"])
+        to_name = number_format(data["to"])
+    else:
+        from_name = "Anonymous"
+        to_name = number_format(data["to"])
+    amount = data["operationAmount"]["amount"]
+    currency = data["operationAmount"]["currency"]["name"]
+    info_operation = (f"\n{data_name} {description_name}\n"
+                      f"{from_name} -> {to_name}\n"
+                      f"{amount} {currency}")
+    return info_operation
