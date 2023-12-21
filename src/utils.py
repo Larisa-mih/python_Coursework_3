@@ -1,11 +1,12 @@
 import json
-import datetime
+
 
 def get_data(path):
     """Функция считывания данных из файла json"""
     with open(path, encoding='utf-8') as file:
         data_dict = json.load(file)
         return data_dict
+
 
 def get_filtered_data(data_dict):
     """Функция фильтрации по "EXECUTED"""
@@ -23,6 +24,7 @@ def get_sorted_list(data_list):
     sorted_list = sorted(data_list, key=lambda operation: operation["date"], reverse=True)
     return sorted_list
 
+
 def number_format(name):
     """Функция маскировки счета и карты"""
     if "счет" in name.lower():
@@ -32,23 +34,27 @@ def number_format(name):
     else:
         name_list = name.split()
         name_operation = name_list[0:-1]
-        format_number = " ".join(name_operation) + " " + name_list[-1][0:4] + " " + name_list[-1][4:6] + "**" + " " + "****" + " " + name_list[-1][-4:]
+        format_number = (" ".join(name_operation) + " " + name_list[-1][0:4]
+                         + " " + name_list[-1][4:6] + "**" + " " + "****"
+                         + " " + name_list[-1][-4:])
         return format_number
+
 
 def data_format(data):
     """Фугкция перевода формата даты"""
     format_data = ".".join(data[0:10].split("-")[::-1])
     return format_data
-    """Второй вариант с помощью datetime"""
+# """Второй вариант с помощью datetime"""
 # datetime.datetime.fromisoformat("2019-08-26T10:50:58.294041")
 
-    """Третий вариант"""
+# """Третий вариант"""
 # my_date = "2019-08-26T10:50:58.294041"
 # my_date_splitter = my_date.split('T')
 # date = my_date_splitter(0)
 # date_parts = date.split('-')
 # reversed_parts = date_parts[::-1]
 # to_return = '.'.join(reversed_parts)
+
 
 def formate_operations_for_output(data):
     data_name = data_format(data["date"])
