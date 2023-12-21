@@ -3,6 +3,7 @@ from src.utils import (number_format, data_format, get_data, get_sorted_list,
                        get_filtered_data, formate_operations_for_output)
 import json
 
+
 def test_number_format():
     assert number_format("MasterCard 7158300734726758") == "MasterCard 7158 30** **** 6758"
     assert number_format("Счет 35383033474447895560") == "Счет **5560"
