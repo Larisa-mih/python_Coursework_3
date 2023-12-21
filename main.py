@@ -1,4 +1,3 @@
-import json
 from config import OPERATIONS_PATH
 from src.utils import get_data, get_filtered_data, get_sorted_list, formate_operations_for_output
 
